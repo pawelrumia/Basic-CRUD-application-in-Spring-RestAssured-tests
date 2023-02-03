@@ -54,14 +54,12 @@
             <version>2.13.0</version>
         </dependency>
         <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+        </dependency>
+        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-thymeleaf</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>com.h2database</groupId>
-            <artifactId>h2</artifactId>
-            <scope>runtime</scope>
         </dependency>
         <dependency>
             <groupId>com.microsoft.sqlserver</groupId>
@@ -99,13 +97,6 @@
             <artifactId>jackson-annotations</artifactId>
             <version>2.9.9</version>
         </dependency>
-        <!--<dependency>-->
-        <!--<groupId>org.json</groupId>-->
-        <!--<artifactId>json</artifactId>-->
-        <!--<version>20180130</version>-->
-        <!--<scope>test</scope>-->
-        <!--</dependency>-->
-        <!-- https://mvnrepository.com/artifact/io.rest-assured/json-path -->
         <dependency>
             <groupId>io.rest-assured</groupId>
             <artifactId>json-path</artifactId>
@@ -152,9 +143,16 @@
             <artifactId>spring-boot-starter-data-redis</artifactId>
             <version>2.3.1.RELEASE</version>
         </dependency>
-
-
-
+        <dependency>
+            <groupId>ru.yandex.qatools.ashot</groupId>
+            <artifactId>ashot</artifactId>
+            <version>1.5.4</version>
+        </dependency>
+        <dependency>
+            <groupId>com.relevantcodes</groupId>
+            <artifactId>extentreports</artifactId>
+            <version>2.41.2</version>
+        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
