@@ -17,8 +17,6 @@ public class StudentController {
 
     @Autowired
     private StudentService studentService;
-    @Autowired
-    private TrainingRepository trainingRepository;
 
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<Object> getAllStudents() {
@@ -59,24 +57,5 @@ public class StudentController {
         return "home";
     }
 
-    @GetMapping(path="/dzialaj")
-    public @ResponseBody Iterable<Exercise> getAllExercises() {
-        // This returns a JSON or XML with the users
-        return trainingRepository.findAll();
-    }
 
-    @PostMapping(path="/dzialaj") // Map ONLY POST Requests
-    public @ResponseBody String addNewUser (@RequestParam String type
-            , @RequestParam String name, @RequestParam int reps,  @RequestParam int series) {
-        // @ResponseBody means the returned String is the response, not a view name
-        // @RequestParam means it is a parameter from the GET or POST request
-
-        Exercise ex = new Exercise();
-        ex.setType(type);
-        ex.setName(name);
-        ex.setRepetitions(reps);
-        ex.setSeries(series);
-        trainingRepository.save(ex);
-        return "Saved";
-    }
 }

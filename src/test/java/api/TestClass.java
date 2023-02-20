@@ -1,30 +1,42 @@
 package api;
 
+import api.models.ExerciseModel;
 import com.example.mazur.p.mazurapp.furthertrainingapp.student.Adres;
 import com.example.mazur.p.mazurapp.furthertrainingapp.student.Education;
 import com.example.mazur.p.mazurapp.furthertrainingapp.student.Student;
 import com.example.mazur.p.mazurapp.furthertrainingapp.student.University;
 import com.example.mazur.p.mazurapp.furthertrainingapp.utils.JsonMapper;
 import com.example.mazur.p.mazurapp.furthertrainingapp.utils.PropertyReader;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.example.mazur.p.mazurapp.furthertrainingapp.utils.TestListeners;
+import io.qameta.allure.Epic;
+import io.qameta.allure.Severity;
+import io.qameta.allure.SeverityLevel;
 import io.restassured.response.Response;
 import org.testng.annotations.DataProvider;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
+
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
+
 import static api.Requests.*;
+import static api.mappers.ExerciseMapper.getExercisesResponse;
 import static com.example.mazur.p.mazurapp.furthertrainingapp.utils.ResponseMapper.getAllStudentsResponse;
 import static com.example.mazur.p.mazurapp.furthertrainingapp.utils.ResponseMapper.getStudentIdResponse;
 import static org.assertj.core.api.Java6Assertions.assertThat;
 
+@Listeners(TestListeners.class)
 public class TestClass {
     private final JsonMapper jsonMapper = new JsonMapper();
     private PropertyReader PR = new PropertyReader();
     private Client client = new Client();
 
+    @Severity(SeverityLevel.CRITICAL)
     @Test(dataProvider = "testProvider", priority = 1)
     public void sendInitialRequests(int id, String role, String name, String course, String city, String street, int number,
-                                     String school, String spec,
-                                     int yearOfG) throws IOException {
+                                    String school, String spec,
+                                    int yearOfG) throws IOException {
         client.basicPostRequest(PR.readProperty("baseUri"),
                 jsonMapper.write(createBaseRequest(id, role, name, course,
                         new Adres(city, street, number),
@@ -43,6 +55,7 @@ public class TestClass {
         };
     }
 
+    @Epic("Students requests")
     @Test(priority = 2)
     public void getOneStudentsById() throws IOException {
         Response response = client.basicGetRequestWithId(PR.readProperty("getStudentsWithId"), 1);
@@ -50,6 +63,7 @@ public class TestClass {
         assertThat(model.getName()).isEqualTo("Gdansk");
     }
 
+    @Epic("Students requests")
     @Test(priority = 2)
     public void getAllStudents() throws IOException {
         Response response = client.basicGetRequest(PR.readProperty("baseUri"));
@@ -57,8 +71,18 @@ public class TestClass {
         assertThat(model.getStudents().get(2).getRole()).isEqualTo("python");
     }
 
+    @Test
+    public void getAllExercises() throws IOException {
+        Response response = client.basicGetRequest(PR.readProperty("getExercises"));
+        ExerciseModel[] model = response.as(ExerciseModel[].class);
+        ExerciseModel[] model2 = getExercisesResponse(response);
+        List<ExerciseModel> exercisesList = Arrays.asList(model);
+        assertThat(exercisesList.get(1).getName()).isEqualTo("Obciazenie");
+        assertThat(model2).anyMatch(ex -> ex.getType().startsWith("P"));
+    }
+
     /**#@note
-     * previous version not working
+     * previous version
      */
     //    @Test(dataProvider = "test1")
 //    public void testWithDataProvider(int id, String name, String course, String city, String street, int number,
