@@ -6,16 +6,21 @@ import com.example.mazur.p.mazurapp.furthertrainingapp.utils.JsonMapper;
 import com.example.mazur.p.mazurapp.furthertrainingapp.utils.PropertyReader;
 import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
+import io.restassured.http.Header;
 import io.restassured.http.Method;
+import io.restassured.parsing.Parser;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import io.restassured.response.ResponseBody;
 import io.restassured.specification.RequestSpecification;
+import jodd.csselly.selector.PseudoClass;
 import org.testng.annotations.Test;
 
 import java.io.IOException;
+
 import static com.example.mazur.p.mazurapp.furthertrainingapp.utils.RequestLogger.logged;
 import static io.restassured.RestAssured.given;
+import static io.restassured.RestAssured.requestSpecification;
 import static io.restassured.http.ContentType.JSON;
 import static org.assertj.core.api.Java6Assertions.assertThat;
 import static org.hamcrest.Matchers.equalTo;
@@ -25,6 +30,22 @@ public class TestsOldWay {
     private Requests request = new Requests();
     private PropertyReader PR = new PropertyReader();
     private JsonPath jsonPath;
+    private static final String bodyFinal = "{\n" +
+            "  \"id\" : 4,\n" +
+            "  \"role\" : \"java\",\n" +
+            "  \"name\" : \"Gdansk\",\n" +
+            "  \"course\" : \"UI\",\n" +
+            "  \"adres\" : {\n" +
+            "    \"city\" : \"Gdansk\",\n" +
+            "    \"street\" : \"Wschodnia\",\n" +
+            "    \"homeNumber\" : 1\n" +
+            "  },\n" +
+            "  \"education\" : {\n" +
+            "    \"school\" : \"UG\",\n" +
+            "    \"specialization\" : \"MSD\",\n" +
+            "    \"yearOfGraduation\" : 1988\n" +
+            "  }\n" +
+            "}";
 
     @Test
     public void sprawdzPierwszyRequest() throws IOException {
@@ -103,5 +124,44 @@ public class TestsOldWay {
                     .when()
                     .delete("students/" + i);
         }
+    }
+
+    @Test
+    public void coTuSieDzieje() throws IOException {
+        RestAssured.baseURI = PR.readProperty("baseUri");
+        System.out.println(given().contentType(JSON)
+                .when().get("http://localhost:8000/students/1")
+                .then().extract().response());
+    }
+
+    @Test
+    public void coTuSieDzieje2() {
+        Response response = given().contentType(JSON)
+                .baseUri("http://localhost:8000/students/1").get().thenReturn();
+
+        System.out.println(response.getBody().as(Student.class));
+    }
+
+    @Test
+    public void coTuSieDziejePost() {
+        RestAssured.defaultParser = Parser.JSON;
+        Response response = given().contentType(JSON)
+                .baseUri("http://localhost:8000/students")
+                .body(bodyFinal)
+                .post().thenReturn();
+
+        System.out.println(response.getBody().asString());
+    }
+
+    @Test
+    public void getStudentSimple() {
+        RequestSpecification requestSpec = new RequestSpecBuilder()
+                .setBaseUri("http://localhost:8000/students/4")
+                .build();
+        Response response = given().spec(requestSpec).get();
+        Student as = response.getBody().as(Student.class);
+        System.out.println(as.getAdres().getCity());
+
+//    return new JsonMapper().read(response.getBody().asString(), UsersMetricsModel.class);
     }
 }

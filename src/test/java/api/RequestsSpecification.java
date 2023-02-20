@@ -1,12 +1,8 @@
 package api;
 
 import io.restassured.builder.RequestSpecBuilder;
-import io.restassured.http.ContentType;
-import io.restassured.http.Header;
 import io.restassured.specification.RequestSpecification;
-import org.apache.http.HttpHeaders;
 
-import java.io.IOException;
 
 import static com.example.mazur.p.mazurapp.furthertrainingapp.utils.RequestLogger.logged;
 import static io.restassured.RestAssured.given;
@@ -41,8 +37,8 @@ public class RequestsSpecification {
     }
 
     public RequestSpecification buildGetRequest(String address) {
-        return given()
+        return logged(given()
                 .contentType(JSON)
-                .baseUri(address);
+                .baseUri(address));
     }
 }

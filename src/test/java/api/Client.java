@@ -1,14 +1,8 @@
 package api;
 
-import com.example.mazur.p.mazurapp.furthertrainingapp.utils.JsonMapper;
 import io.restassured.response.Response;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class Client {
-    private static final Logger LOGGER =
-            LoggerFactory.getLogger(TestClass.class);
-    private JsonMapper jsonMapper = new JsonMapper();
     private final RequestsSpecification requestSpec = new RequestsSpecification();
 
     public Response basicGetRequest(String endpoint) {
