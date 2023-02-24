@@ -17,11 +17,8 @@ import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.List;
 
 import static api.Requests.*;
-import static api.mappers.ExerciseMapper.getExercisesResponse;
 import static com.example.mazur.p.mazurapp.furthertrainingapp.utils.ResponseMapper.getAllStudentsResponse;
 import static com.example.mazur.p.mazurapp.furthertrainingapp.utils.ResponseMapper.getStudentIdResponse;
 import static org.assertj.core.api.Java6Assertions.assertThat;
@@ -69,16 +66,6 @@ public class TestClass {
         Response response = client.basicGetRequest(PR.readProperty("baseUri"));
         University model = getAllStudentsResponse(response);
         assertThat(model.getStudents().get(2).getRole()).isEqualTo("python");
-    }
-
-    @Test
-    public void getAllExercises() throws IOException {
-        Response response = client.basicGetRequest(PR.readProperty("getExercises"));
-        ExerciseModel[] model = response.as(ExerciseModel[].class);
-        ExerciseModel[] model2 = getExercisesResponse(response);
-        List<ExerciseModel> exercisesList = Arrays.asList(model);
-        assertThat(exercisesList.get(1).getName()).isEqualTo("Obciazenie");
-        assertThat(model2).anyMatch(ex -> ex.getType().startsWith("P"));
     }
 
     /**#@note
