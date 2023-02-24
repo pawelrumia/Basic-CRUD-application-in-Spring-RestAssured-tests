@@ -15,9 +15,9 @@ import static api.mappers.ExerciseMapper.getSingleExercisesResponse;
 
 public class ExercisesTests {
     private final JsonMapper jsonMapper = new JsonMapper();
-    private PropertyReader PR = new PropertyReader();
-    private Client client = new Client();
-    private Requests requests = new Requests();
+    private final PropertyReader PR = new PropertyReader();
+    private final Client client = new Client();
+    private final Requests requests = new Requests();
 
     @Test
     public void getAllExercises() throws IOException {
