@@ -5,15 +5,19 @@ import io.restassured.response.Response;
 public class Client {
     private final RequestsSpecification requestSpec = new RequestsSpecification();
 
-    public Response basicGetRequest(String endpoint) {
-        return requestSpec.buildGetRequest(endpoint).get();
+    public Response get(String endpoint) {
+        return requestSpec.basicGetRequest(endpoint);
     }
 
-    public Response basicPostRequest(String body, String endpoint) {
-        return requestSpec.buildPostRequest(body, endpoint).post();
+    public Response post(String body, String endpoint) {
+       return requestSpec.basicPostRequest(body, endpoint);
     }
 
-    public Response basicGetRequestWithId(String endpoint, int id) {
-        return requestSpec.buildGetRequestWithId(endpoint, id).get();
+    public Response getById(String endpoint, int id) {
+        return requestSpec.buildGetRequestWithId(endpoint, id);
+    }
+
+    public Response deleteById(String endpoint, int id) {
+        return requestSpec.buildDeleteById(endpoint, id);
     }
 }

@@ -1,42 +1,41 @@
 package api;
 
-import io.restassured.builder.RequestSpecBuilder;
-import io.restassured.specification.RequestSpecification;
-import static com.example.mazur.p.mazurapp.furthertrainingapp.utils.RequestLogger.logged;
+import io.restassured.builder.ResponseSpecBuilder;
+import io.restassured.filter.log.LogDetail;
+import io.restassured.http.ContentType;
+import io.restassured.response.Response;
+import io.restassured.specification.ResponseSpecification;
+
 import static io.restassured.RestAssured.given;
-import static io.restassured.http.ContentType.JSON;
 
 public class RequestsSpecification {
 
     public RequestsSpecification() {
     }
 
-    public RequestSpecification buildPostRequest(String requestBody, String address) {
-        return logged(given()
-                .contentType(JSON)
-                .baseUri(address)
-                .body(requestBody));
+    private final ResponseSpecification responseSpec = new ResponseSpecBuilder()
+            .expectStatusCode(200)
+            .expectContentType(ContentType.JSON)
+            .log(LogDetail.ALL)
+            .build();
+
+    public Response basicPostRequest(String body, String address) {
+        return given().contentType(ContentType.JSON)
+                .body(body).when().post(address).then()
+                .spec(responseSpec).extract().response();
     }
 
-    public RequestSpecification buildPostRequestWithId(String requestBody, String address, int id) {
-        return given()
-                .contentType(JSON)
-                .baseUri(address)
-                .queryParam("id", id)
-                .body(requestBody);
+    public Response basicGetRequest(String address) {
+        return given().when().get(address).then().spec(responseSpec).extract().response();
     }
 
-    public RequestSpecification buildGetRequestWithId(String address,  int id) {
-        return logged(new RequestSpecBuilder()
-                .setContentType(JSON)
-                .setBaseUri(address)
-                .addPathParam("id", id)
-                .build());
+    public Response buildGetRequestWithId(String address, int id) {
+        return given().pathParam("id", id).when().get(address)
+                .then().spec(responseSpec).extract().response();
     }
 
-    public RequestSpecification buildGetRequest(String address) {
-        return logged(given()
-                .contentType(JSON)
-                .baseUri(address));
+    public Response buildDeleteById(String address, int id) {
+        return given().pathParam("id", id).when().delete(address).then()
+                .spec(responseSpec).log().all().extract().response();
     }
 }
