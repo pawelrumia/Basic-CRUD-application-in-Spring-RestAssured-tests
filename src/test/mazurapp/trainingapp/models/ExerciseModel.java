@@ -1,4 +1,4 @@
-package api.models;
+package mazurapp.trainingapp.models;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;

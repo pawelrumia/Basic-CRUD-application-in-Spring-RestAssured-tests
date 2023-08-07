@@ -11,7 +11,7 @@
         <!--</run>-->
         <!--</groups>-->
         <classes>
-            <class name="api.TestClass"/>
+            <class name="mazurapp.trainingapp.ExercisesTests"/>
         </classes>
     </test>
 </suite>

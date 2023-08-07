@@ -1,29 +1,24 @@
-package api;
+package mazurapp.trainingapp;
 
-import api.models.ExerciseModel;
 import com.example.mazur.p.mazurapp.furthertrainingapp.student.Adres;
 import com.example.mazur.p.mazurapp.furthertrainingapp.student.Education;
 import com.example.mazur.p.mazurapp.furthertrainingapp.student.Student;
 import com.example.mazur.p.mazurapp.furthertrainingapp.student.University;
 import com.example.mazur.p.mazurapp.furthertrainingapp.utils.JsonMapper;
 import com.example.mazur.p.mazurapp.furthertrainingapp.utils.PropertyReader;
-import com.example.mazur.p.mazurapp.furthertrainingapp.utils.TestListeners;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import io.restassured.response.Response;
 import org.testng.annotations.DataProvider;
-import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
 import java.io.IOException;
 
-import static api.Requests.*;
 import static com.example.mazur.p.mazurapp.furthertrainingapp.utils.ResponseMapper.getAllStudentsResponse;
 import static com.example.mazur.p.mazurapp.furthertrainingapp.utils.ResponseMapper.getStudentIdResponse;
 import static org.assertj.core.api.Java6Assertions.assertThat;
 
-@Listeners(TestListeners.class)
 public class TestClass {
     private final JsonMapper jsonMapper = new JsonMapper();
     private PropertyReader PR = new PropertyReader();
@@ -34,8 +29,8 @@ public class TestClass {
     public void sendInitialRequests(int id, String role, String name, String course, String city, String street, int number,
                                     String school, String spec,
                                     int yearOfG) throws IOException {
-        client.basicPostRequest(PR.readProperty("baseUri"),
-                jsonMapper.write(createBaseRequest(id, role, name, course,
+        client.post(PR.readProperty("baseUri"),
+                jsonMapper.write(Requests.createBaseRequest(id, role, name, course,
                         new Adres(city, street, number),
                         new Education(school, spec, yearOfG))));
     }
@@ -55,7 +50,7 @@ public class TestClass {
     @Epic("Students requests")
     @Test(priority = 2)
     public void getOneStudentsById() throws IOException {
-        Response response = client.basicGetRequestWithId(PR.readProperty("getStudentsWithId"), 1);
+        Response response = client.getById(PR.readProperty("getStudentsWithId"), 1);
         Student model = getStudentIdResponse(response);
         assertThat(model.getName()).isEqualTo("Gdansk");
     }
@@ -63,7 +58,7 @@ public class TestClass {
     @Epic("Students requests")
     @Test(priority = 2)
     public void getAllStudents() throws IOException {
-        Response response = client.basicGetRequest(PR.readProperty("baseUri"));
+        Response response = client.get(PR.readProperty("baseUri"));
         University model = getAllStudentsResponse(response);
         assertThat(model.getStudents().get(2).getRole()).isEqualTo("python");
     }

@@ -1,4 +1,4 @@
-package assertions;
+package mazurapp.trainingapp.assertions;
 
 import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;

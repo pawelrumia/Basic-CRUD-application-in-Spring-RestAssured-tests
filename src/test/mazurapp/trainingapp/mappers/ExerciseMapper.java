@@ -1,6 +1,6 @@
-package api.mappers;
+package mazurapp.trainingapp.mappers;
 
-import api.models.ExerciseModel;
+import mazurapp.trainingapp.models.ExerciseModel;
 import com.example.mazur.p.mazurapp.furthertrainingapp.utils.JsonMapper;
 import io.restassured.response.Response;
 

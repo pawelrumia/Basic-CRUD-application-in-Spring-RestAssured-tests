@@ -1,26 +1,23 @@
-package api;
+package mazurapp.trainingapp;
 
-import assertions.AssertStudent;
+import mazurapp.trainingapp.assertions.AssertStudent;
 import com.example.mazur.p.mazurapp.furthertrainingapp.student.Student;
 import com.example.mazur.p.mazurapp.furthertrainingapp.utils.JsonMapper;
 import com.example.mazur.p.mazurapp.furthertrainingapp.utils.PropertyReader;
 import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
-import io.restassured.http.Header;
 import io.restassured.http.Method;
 import io.restassured.parsing.Parser;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import io.restassured.response.ResponseBody;
 import io.restassured.specification.RequestSpecification;
-import jodd.csselly.selector.PseudoClass;
 import org.testng.annotations.Test;
 
 import java.io.IOException;
 
 import static com.example.mazur.p.mazurapp.furthertrainingapp.utils.RequestLogger.logged;
 import static io.restassured.RestAssured.given;
-import static io.restassured.RestAssured.requestSpecification;
 import static io.restassured.http.ContentType.JSON;
 import static org.assertj.core.api.Java6Assertions.assertThat;
 import static org.hamcrest.Matchers.equalTo;

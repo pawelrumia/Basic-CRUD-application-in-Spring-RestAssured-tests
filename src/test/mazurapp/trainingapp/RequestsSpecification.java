@@ -1,4 +1,4 @@
-package api;
+package mazurapp.trainingapp;
 
 import io.restassured.builder.ResponseSpecBuilder;
 import io.restassured.filter.log.LogDetail;

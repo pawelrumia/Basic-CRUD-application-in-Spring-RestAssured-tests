@@ -1,7 +1,7 @@
-package api;
+package mazurapp.trainingapp;
 
-import api.models.ExerciseModel;
-import assertions.ExerciseAssertions;
+import mazurapp.trainingapp.models.ExerciseModel;
+import mazurapp.trainingapp.assertions.ExerciseAssertions;
 import com.example.mazur.p.mazurapp.furthertrainingapp.utils.JsonMapper;
 import com.example.mazur.p.mazurapp.furthertrainingapp.utils.PropertyReader;
 import io.restassured.response.Response;
@@ -11,8 +11,8 @@ import org.testng.annotations.Test;
 import java.io.IOException;
 import java.util.List;
 
-import static api.mappers.ExerciseMapper.getExercisesResponse;
-import static api.mappers.ExerciseMapper.getSingleExercisesResponse;
+import static mazurapp.trainingapp.mappers.ExerciseMapper.getExercisesResponse;
+import static mazurapp.trainingapp.mappers.ExerciseMapper.getSingleExercisesResponse;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 public class ExercisesTests {

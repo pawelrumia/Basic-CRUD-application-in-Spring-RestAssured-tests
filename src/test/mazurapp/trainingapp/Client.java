@@ -1,4 +1,4 @@
-package api;
+package mazurapp.trainingapp;
 
 import io.restassured.response.Response;
 

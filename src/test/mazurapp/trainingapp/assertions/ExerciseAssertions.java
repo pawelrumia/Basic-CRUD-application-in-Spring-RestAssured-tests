@@ -1,4 +1,4 @@
-package assertions;
+package mazurapp.trainingapp.assertions;
 
 import org.assertj.core.api.SoftAssertions;
 

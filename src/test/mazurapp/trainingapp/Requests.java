@@ -1,4 +1,4 @@
-package api;
+package mazurapp.trainingapp;
 
 import com.example.mazur.p.mazurapp.furthertrainingapp.student.Adres;
 import com.example.mazur.p.mazurapp.furthertrainingapp.student.Education;
